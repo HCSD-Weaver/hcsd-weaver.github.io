@@ -3,44 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hcsd-weaver.github.io</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/popper.min.js">
+    <title>Directory Explorer</title>
     <style>
-        /* Basic styling for sidebar */
+        /* Reset and Base Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: Arial, sans-serif;
-        }
-        .sidebar {
-            width: 250px;
-            background-color: #333;
-            color: #fff;
+            background-color: #f4f4f9;
+            display: flex;
             height: 100vh;
-            padding: 20px;
-            position: fixed;
         }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 300px;
+            background-color: #ffffff;
+            color: #333;
+            padding: 20px;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            border-right: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto;
+        }
+        .sidebar h2 {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Folder List Styling */
         .folder-list {
             list-style: none;
-            padding: 0;
-            margin-top: 20px;
         }
         .folder-item {
-            padding: 10px;
+            display: block;
+            padding: 12px 15px;
+            font-size: 1em;
+            font-weight: 500;
+            color: #555;
+            background-color: #f9f9fb;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
             cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            text-decoration: none;
         }
         .folder-item:hover {
-            background-color: #444;
+            background-color: #eaf0f6;
+            box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.1);
+            color: #333;
         }
+
     </style>
 </head>
 <body>
     <div class="sidebar" id="folderSidebar">
-        <h2>Folders</h2>
+        <h2>Directory Explorer</h2>
         <ul class="folder-list" id="folderList"></ul>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
     <script>
         const repoOwner = 'HCSD-Weaver';
         const repoName = 'hcsd-weaver.github.io';
@@ -62,18 +93,15 @@
             const folderList = document.getElementById('folderList');
             items.forEach(item => {
                 if (item.type === 'dir') {
-                    const listItem = document.createElement('li');
+                    const listItem = document.createElement('a');
                     listItem.className = 'folder-item';
                     listItem.textContent = item.name;
-                    listItem.onclick = () => {
-                        window.location.href = `https://${repoOwner}.github.io/${repoName}/${item.name}/index.html`;
-                    };
+                    listItem.href = `https://${repoOwner}.github.io/${repoName}/${item.name}/index.html`;
                     folderList.appendChild(listItem);
                 }
             });
         }
 
-        // Initialize Popper.js (optional for advanced sidebar styling)
         fetchFolders();
     </script>
 </body>
